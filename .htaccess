@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /packs/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /packs/index.html [L]
+

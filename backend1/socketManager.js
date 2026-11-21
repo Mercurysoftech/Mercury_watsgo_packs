@@ -3,8 +3,9 @@ const { Server } = require("socket.io");
 let io;
 
 const initSocket = (server) => {
+  const apiPrefix = (process.env.API_PREFIX || '/packs/api').replace(/\/+$/, '');
   io = new Server(server, {
-    path: '/packs/api/socket.io/',
+    path: `${apiPrefix}/socket.io/`,
     transports: ['polling', 'websocket'],
     cors: {
       origin: true, // Allow any origin safely

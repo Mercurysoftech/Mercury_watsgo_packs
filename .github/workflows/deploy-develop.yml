@@ -1,0 +1,63 @@
+name: Deploy Develop
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+concurrency:
+  group: packs-develop-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USER }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          port: ${{ secrets.STAGING_PORT }}
+          envs: DEPLOY_SHA,VITE_API_URL
+          command_timeout: 30m
+          script: |
+            set -eu
+
+            WEB_ROOT=/home/mercurysoftech/web/packs.watsgo.in/public_html
+            RELEASE_DIR=/home/mercurysoftech/web/packs.watsgo.in/.deploy-releases/$DEPLOY_SHA
+
+            test -n "$VITE_API_URL" || { echo "Missing Actions variable VITE_API_URL"; exit 1; }
+            test -f "$WEB_ROOT/backend1/.env" || { echo "Missing backend1/.env on server"; exit 1; }
+            test -f "$WEB_ROOT/backend1/config/firebase-service-account.json" || { echo "Missing Firebase service-account file on server"; exit 1; }
+
+            git -C "$WEB_ROOT" fetch origin develop
+            git -C "$WEB_ROOT" cat-file -e "$DEPLOY_SHA^{commit}"
+            mkdir -p "$RELEASE_DIR"
+            git -C "$WEB_ROOT" archive "$DEPLOY_SHA" | tar -x -C "$RELEASE_DIR"
+
+            cp "$WEB_ROOT/backend1/.env" "$RELEASE_DIR/backend1/.env"
+            mkdir -p "$RELEASE_DIR/backend1/config"
+            cp "$WEB_ROOT/backend1/config/firebase-service-account.json" "$RELEASE_DIR/backend1/config/firebase-service-account.json"
+
+            cd "$RELEASE_DIR"
+            npm ci
+            VITE_BASE_PATH=/ VITE_API_URL="$VITE_API_URL" VITE_API_BASE_URL="$VITE_API_URL" npm run build
+            cp -a dist/. "$WEB_ROOT/"
+            cp .htaccess "$WEB_ROOT/.htaccess"
+
+            cp -a "$RELEASE_DIR/backend1/." "$WEB_ROOT/backend1/"
+            npm ci --prefix "$WEB_ROOT/backend1" --omit=dev
+            cd "$WEB_ROOT/backend1"
+
+            if pm2 describe mercury-watsgo-packs >/dev/null 2>&1; then
+              pm2 restart mercury-watsgo-packs --update-env
+            else
+              pm2 start packs_server.js --name mercury-watsgo-packs
+            fi
+            pm2 save

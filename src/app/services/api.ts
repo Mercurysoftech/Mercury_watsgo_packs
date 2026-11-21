@@ -3,8 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 // Common types handled by @types/node or vite
 
 const API_BASE_URL = (import.meta as any).env.VITE_API_URL;
-// Add /backend1 prefix to uploads as required by the current staging/prod environment mapping
-const UPLOAD_BASE_URL = (API_BASE_URL?.split('/api')[0] || '') + '/backend1';
+const UPLOAD_BASE_URL = API_BASE_URL ? new URL(API_BASE_URL).origin : '';
 
 export { API_BASE_URL, UPLOAD_BASE_URL };
 
@@ -32,7 +31,7 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            window.location.href = '/packs/';
+            window.location.href = import.meta.env.BASE_URL;
         }
         return Promise.reject(error);
     }

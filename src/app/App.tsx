@@ -132,7 +132,7 @@ export default function App() {
     }
   };
 
-  // Check for payment status in URL
+  // Check for payment status in URL 111
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const status = params.get('payment_status');

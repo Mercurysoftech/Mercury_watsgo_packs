@@ -1,19 +1,20 @@
 import { io, Socket } from "socket.io-client";
 
-// Get API URL from environment or default to localhost:5000
-const SOCKET_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL;
+const API_ENDPOINT = API_URL ? new URL(API_URL) : null;
 
 class SocketService {
   private socket: Socket | null = null;
 
   connect() {
     if (!this.socket) {
-      // Determine base URL & socket path
-      let baseUrl = window.location.origin;
-      let socketPath = '/packs/api/socket.io/';
+      let baseUrl = API_ENDPOINT?.origin || window.location.origin;
+      let socketPath = API_ENDPOINT
+        ? `${API_ENDPOINT.pathname.replace(/\/+$/, '')}/socket.io/`
+        : '/packs/api/socket.io/';
 
       if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        baseUrl = 'http://localhost:5000';
+        baseUrl = API_ENDPOINT?.origin || 'http://localhost:5000';
       }
 
       this.socket = io(baseUrl, {

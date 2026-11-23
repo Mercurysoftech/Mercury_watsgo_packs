@@ -137,7 +137,8 @@ exports.register = async (req, res) => {
             try {
                 const { sendEmail } = require('../services/emailService');
                 const subject = 'Welcome to Fresh Fruit Packs - Staff Account Created';
-                const text = `Hi ${fullName},\n\nYour staff account has been created.\n\nLogin Details:\nEmail: ${email}\nPassword: ${password}\n\nLogin here: https://watsgo.in/packs/`;
+                const loginBaseUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',')[0].trim() : '';
+                const text = `Hi ${fullName},\n\nYour staff account has been created.\n\nLogin Details:\nEmail: ${email}\nPassword: ${password}\n\nLogin here: ${loginBaseUrl}/`;
                 const html = `
                     <h3>Welcome to Fresh Fruit Packs</h3>
                     <p>Hi ${fullName},</p>
@@ -145,7 +146,7 @@ exports.register = async (req, res) => {
                     <p><strong>Login Details:</strong><br>
                     Email: ${email}<br>
                     Password: ${password}</p>
-                    <p><a href="https://watsgo.in/packs/">Click here to login</a></p>
+                    <p><a href="${loginBaseUrl}/">Click here to login</a></p>
                     <p>Thank you!</p>
                 `;
                 await sendEmail(email, subject, text, html);

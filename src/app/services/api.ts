@@ -2,8 +2,14 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 // Common types handled by @types/node or vite
 
-const API_BASE_URL = (import.meta as any).env.VITE_API_URL;
-const UPLOAD_BASE_URL = API_BASE_URL ? new URL(API_BASE_URL).origin : '';
+const API_BASE_URL = (import.meta as any).env.VITE_API_URL || '';
+const UPLOAD_BASE_URL = (() => {
+    try {
+        return API_BASE_URL ? new URL(API_BASE_URL, window.location.origin).origin : window.location.origin;
+    } catch {
+        return window.location.origin;
+    }
+})();
 
 export { API_BASE_URL, UPLOAD_BASE_URL };
 

@@ -40,7 +40,7 @@ const getPaymentLink = async (customer, userSettings, forcedAmount = null, multi
         }
     } else if (userSettings.preferred_payment_method === 'upi' && userSettings.upi_id) {
         const businessName = userSettings.business_name || 'Fresh Fruit Packs';
-        const clientUrl = process.env.CLIENT_URL || 'https://watsgo.in';
+        const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',')[0].trim() : '';
         const apiPrefix = process.env.API_PREFIX || '/packs/api';
 
         // Link to our own reliable custom backend direct UPI redirector

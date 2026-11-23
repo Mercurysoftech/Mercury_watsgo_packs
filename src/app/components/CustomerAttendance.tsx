@@ -105,7 +105,7 @@ function isSunday(dateStr: string): boolean {
 }
 
 /**
- * Count delivery days (Mon–Sat) from fromDate to toDate inclusive
+ * Count delivery days (Mon–Sat) from fromDate to toDate inclusive123
  */
 function countDeliveryDays(fromDateStr: string, toDateStr: string): number {
     if (!fromDateStr || !toDateStr || fromDateStr > toDateStr) return 0;

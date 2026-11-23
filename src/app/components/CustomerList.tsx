@@ -40,7 +40,7 @@ export function CustomerList({ customers, onEditCustomer, onDeleteCustomer, onSe
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
-  // Profile Modal State
+  // Profile Modal State111
   const [selectedCustomerForProfile, setSelectedCustomerForProfile] = useState<Customer | null>(null);
   const [deliveryUsers, setDeliveryUsers] = useState<DeliveryUser[]>([]);
   const [packs, setPacks] = useState<Pack[]>([]);

@@ -1,7 +1,13 @@
 import { io, Socket } from "socket.io-client";
 
-const API_URL = import.meta.env.VITE_API_URL;
-const API_ENDPOINT = API_URL ? new URL(API_URL) : null;
+const API_URL = import.meta.env.VITE_API_URL || '';
+const API_ENDPOINT = (() => {
+  try {
+    return API_URL ? new URL(API_URL, window.location.origin) : null;
+  } catch {
+    return null;
+  }
+})();
 
 class SocketService {
   private socket: Socket | null = null;

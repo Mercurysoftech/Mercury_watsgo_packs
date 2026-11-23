@@ -314,7 +314,7 @@ export function CustomerReviews() {
                           .map((img, idx) => (
                             <div key={idx} className="aspect-square rounded-2xl overflow-hidden border border-gray-100 shadow-sm group hover:scale-105 transition-all bg-white p-1">
                               <img
-                                src={`https://watsgo.in/packs_custo_app_api${img?.startsWith('/') ? img : `/${img}`}`}
+                                src={`${(import.meta.env.VITE_CUSTOMER_APP_API_URL || import.meta.env.VITE_API_URL || '').replace(/\/api\/?$/, '')}${img?.startsWith('/') ? img : `/${img}`}`}
                                 alt={`Submission ${idx + 1}`}
                                 className="w-full h-full object-cover rounded-xl"
                                 onError={(e) => {

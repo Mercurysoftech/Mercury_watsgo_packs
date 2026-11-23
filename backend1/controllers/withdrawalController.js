@@ -78,7 +78,7 @@ exports.updateStatus = async (req, res) => {
         // 3. Trigger Push Notification on the Customer App API
         try {
             const CUSTOMER_API_KEY = process.env.CUSTOMER_APP_API_KEY || 'watsgo_admin_secret_123';
-            const CUSTOMER_API_URL = process.env.CUSTOMER_APP_API_URL || 'https://watsgo.in/packs/customer/app/api';
+            const CUSTOMER_API_URL = process.env.CUSTOMER_APP_API_URL || '';
 
             await axios.post(`${CUSTOMER_API_URL}/notifications/withdrawal-status`, {
                 customer_id: customer_id,

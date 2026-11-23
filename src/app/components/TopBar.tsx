@@ -58,7 +58,7 @@ export function TopBar({
         };
     }, [isOpen]);
 
-    // Format relative time helper
+    // Format relative time helper123
     const formatTimeAgo = (timestampStr: string) => {
         try {
             const date = new Date(timestampStr);

@@ -18,7 +18,7 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         env:
           DEPLOY_SHA: ${{ github.sha }}
-          VITE_API_URL: ${{ vars.VITE_API_URL || secrets.VITE_API_URL || 'https://packs.watsgo.in/packs/api' }}
+          VITE_API_URL: ${{ vars.VITE_API_URL || secrets.VITE_API_URL || '/packs/api' }}
         with:
           host: ${{ secrets.STAGING_HOST }}
           username: ${{ secrets.STAGING_USER }}

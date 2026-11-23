@@ -34,7 +34,7 @@ export function CustomerList({ customers, onEditCustomer, onDeleteCustomer, onSe
   const [showExportDropdown, setShowExportDropdown] = useState(false);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
 
-  // Close dropdown when clicking outside
+  // Close dropdown when clicking outside11111
   useEffect(() => {
     const handleClickOutside = () => setOpenDropdownId(null);
     document.addEventListener('click', handleClickOutside);

@@ -52,6 +52,8 @@ jobs:
             cp .htaccess "$WEB_ROOT/.htaccess"
 
             cp -a "$RELEASE_DIR/backend1/." "$WEB_ROOT/backend1/"
+            mkdir -p "$WEB_ROOT/backend1/uploads/logos"
+            ln -sfn "$WEB_ROOT/backend1/uploads" "$WEB_ROOT/uploads"
             npm ci --prefix "$WEB_ROOT/backend1" --omit=dev
             cd "$WEB_ROOT/backend1"
 

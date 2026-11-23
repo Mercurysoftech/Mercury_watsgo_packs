@@ -10,9 +10,10 @@ RewriteCond %{HTTP:Upgrade} websocket [NC]
 RewriteCond %{HTTP:Connection} upgrade [NC]
 RewriteRule ^socket\.io/(.*)$ ws://127.0.0.1:9082/packs/api/socket.io/$1 [P,L]
 
-# 2. Proxy HTTP API and Socket.io polling requests to Node backend (port 9082)
+# 2. Proxy HTTP API, uploads, and Socket.io polling requests to Node backend (port 9082)
 RewriteRule ^packs/api/(.*)$ http://127.0.0.1:9082/packs/api/$1 [P,L]
 RewriteRule ^api/(.*)$ http://127.0.0.1:9082/packs/api/$1 [P,L]
+RewriteRule ^uploads/(.*)$ http://127.0.0.1:9082/uploads/$1 [P,L]
 RewriteRule ^socket\.io/(.*)$ http://127.0.0.1:9082/packs/api/socket.io/$1 [P,L]
 
 # 3. Frontend SPA Fallback

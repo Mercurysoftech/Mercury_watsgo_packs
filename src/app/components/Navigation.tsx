@@ -154,7 +154,12 @@ export function Navigation({
           <div className="flex items-center gap-2.5 bg-green-50/50 border border-green-100 px-2.5 py-1.5 rounded-2xl max-w-[200px] truncate">
             <div className="w-9 h-9 rounded-xl bg-white border border-green-500 flex items-center justify-center overflow-hidden shrink-0">
               {userLogo ? (
-                <img src={getLogoUrl(userLogo) || undefined} alt="Logo" className="w-full h-full object-cover" />
+                <img
+                  src={getLogoUrl(userLogo) || undefined}
+                  alt="Logo"
+                  className="w-full h-full object-cover"
+                  onError={(e) => { (e.target as HTMLImageElement).src = logoImg; }}
+                />
               ) : (
                 <UserIcon className="w-4 h-4 text-green-600" />
               )}
@@ -306,7 +311,12 @@ export function Navigation({
         <div className="p-4 mx-4 my-2 bg-green-50/50 border border-green-100 rounded-2xl flex items-center gap-4 shrink-0">
           <div className="w-12 h-12 rounded-xl bg-white border border-green-500 flex items-center justify-center overflow-hidden shrink-0">
             {userLogo ? (
-              <img src={getLogoUrl(userLogo) || undefined} alt="Logo" className="w-full h-full object-cover" />
+              <img
+                src={getLogoUrl(userLogo) || undefined}
+                alt="Logo"
+                className="w-full h-full object-cover"
+                onError={(e) => { (e.target as HTMLImageElement).src = logoImg; }}
+              />
             ) : (
               <UserIcon className="w-6 h-6 text-green-600" />
             )}
@@ -366,7 +376,12 @@ export function Navigation({
         <div className="mx-6 mb-8 px-4 py-4 bg-green-50/50 border border-green-100 rounded-3xl flex items-center gap-4 group transition-all hover:bg-green-50 hover:border-green-200">
           <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center border border-green-500 shadow-sm overflow-hidden shrink-0 transition-transform group-hover:scale-105">
             {userLogo ? (
-              <img src={getLogoUrl(userLogo) || undefined} alt="Logo" className="w-full h-full object-cover" />
+              <img
+                src={getLogoUrl(userLogo) || undefined}
+                alt="Logo"
+                className="w-full h-full object-cover"
+                onError={(e) => { (e.target as HTMLImageElement).src = logoImg; }}
+              />
             ) : (
               <div className="bg-green-50 w-full h-full flex items-center justify-center">
                 <UserIcon className="w-6 h-6 text-green-600" />

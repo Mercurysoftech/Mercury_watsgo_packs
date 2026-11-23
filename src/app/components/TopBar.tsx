@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Bell, Truck, Star, CreditCard, DollarSign, CheckCheck, Trash2, X, Clock } from 'lucide-react';
+import logoImg from '../../assets/logo.png';
 import { UserRole, AdminNotification, Page } from '../types';
 import { UPLOAD_BASE_URL } from '../services/api';
 
@@ -254,7 +255,12 @@ export function TopBar({
                 <div className="flex items-center gap-3 pl-2 border-l border-gray-100">
                     <div className="w-10 h-10 bg-green-100 text-green-700 font-bold rounded-full flex items-center justify-center overflow-hidden border border-gray-100 shadow-sm">
                         {userLogo ? (
-                            <img src={getLogoUrl(userLogo) || undefined} alt={userName} className="w-full h-full object-cover" />
+                            <img
+                                src={getLogoUrl(userLogo) || undefined}
+                                alt={userName}
+                                className="w-full h-full object-cover"
+                                onError={(e) => { (e.target as HTMLImageElement).src = logoImg; }}
+                            />
                         ) : (
                             <span className="text-xs">{(userName || 'Admin').split(' ').map((n) => n[0]).join('').toUpperCase().substring(0, 2)}</span>
                         )}

@@ -34,13 +34,13 @@ export function CustomerList({ customers, onEditCustomer, onDeleteCustomer, onSe
   const [showExportDropdown, setShowExportDropdown] = useState(false);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
 
-  // Close dropdown when clicking outside111
+  // Close dropdown when clicking outside11111
   useEffect(() => {
     const handleClickOutside = () => setOpenDropdownId(null);
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
-  // Profile Modal State
+  // Profile Modal State111
   const [selectedCustomerForProfile, setSelectedCustomerForProfile] = useState<Customer | null>(null);
   const [deliveryUsers, setDeliveryUsers] = useState<DeliveryUser[]>([]);
   const [packs, setPacks] = useState<Pack[]>([]);

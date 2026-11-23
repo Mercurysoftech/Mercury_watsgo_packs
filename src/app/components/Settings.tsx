@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Building2, Bell, DollarSign, Lock, Save, MessageCircle, CheckCircle, XCircle, Loader2, CreditCard, Clock, Apple, X, FileText, ArrowUpCircle, Download, ExternalLink, DownloadCloud, Camera, User, Trash2, Truck, ShieldCheck, Smartphone, Users, UserPlus, MapPin, ShoppingCart, AlertTriangle } from 'lucide-react';
+import logoImg from '../../assets/logo.png';
 import { BusinessSettings } from '../types';
 import { subscriptionAPI, authAPI, UPLOAD_BASE_URL } from '../services/api';
 import { SubscriptionLock } from './SubscriptionLock';
@@ -484,6 +485,7 @@ export function Settings({ settings, onSave, onViewInvoice, onLogout, isSubscrip
                           src={getLogoUrl(formData.businessLogo) || undefined}
                           alt="Business Logo"
                           className="w-full h-full object-cover"
+                          onError={(e) => { (e.target as HTMLImageElement).src = logoImg; }}
                         />
                       ) : (
                         <div className="text-center p-4">
